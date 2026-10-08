@@ -1,0 +1,42 @@
+# Input params for the OGC application package generator.
+# Every field below lands somewhere specific in the generated CWL --
+# see references/algorithm-config.md for the full mapping.
+
+# --- Identity (OGC req-9: id, label, abstract) ---
+algorithm_description: Convert an input image to greyscale using GDAL.
+algorithm_name: demo-color-to-grey    # lowercase [a-z0-9._-]; becomes the CWL id, image name, and filename
+algorithm_version: main               # keep equal to the branch you push from
+keywords: ogc, gdal, image-processing, greyscale
+
+# --- Provenance ---
+code_repository: https://github.com/marjo-luc/my-sample-algorithm.git
+citation: https://github.com/marjo-luc/my-sample-algorithm.git
+author: Marjorie Lucas
+contributor: Marjorie Lucas
+license: None
+release_notes: None
+
+# --- Execution ---
+run_command: run.py                   # must be on PATH in the image, or an absolute path
+ram_min: 2048                         # mebibytes -- minimum RAM; too low means an OOM kill
+cores_min: 1
+outdir_max: 512                       # mebibytes -- output dir cap; too low fails at the very end
+
+# --- Inputs: each becomes `--<name> <value>` on the command line ---
+inputs:
+  - name: input_image
+    doc: Path to the input image to convert to greyscale (any GDAL-readable raster format)
+    label: Input image
+    type: File
+  - name: output_file
+    doc: Name of the output greyscale GeoTIFF file (written inside output/)
+    label: Output filename
+    type: string?
+    default: greyscale.tif
+
+# --- Output: exactly one, always a Directory globbed from ./output* ---
+# The name MUST start with "out": MAAP uses it to mount the results into the
+# user's bucket. Nothing validates this -- any other name loses the results.
+outputs:
+  - name: out
+    type: Directory
