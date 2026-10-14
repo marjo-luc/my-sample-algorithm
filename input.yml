@@ -1,0 +1,4 @@
+# Sample CWL job file: cwltool cwl_workflows/process_write-inputs_main.cwl input.yml
+# Only the required input with no default is set; the others fall back to
+# their defaults (or are omitted, for optional_no_default).
+required_no_default: hello

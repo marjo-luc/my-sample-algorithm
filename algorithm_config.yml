@@ -1,0 +1,55 @@
+# Input params for the OGC application package generator.
+# Every field below lands somewhere specific in the generated CWL.
+
+# --- Identity (OGC req-9: id, label, abstract) ---
+algorithm_description: Write four text inputs to a text file.
+algorithm_name: write-inputs          # lowercase [a-z0-9._-]; becomes the CWL id, image name, and filename
+algorithm_version: main               # keep equal to the branch you push from
+keywords: ogc, demo, text
+
+# --- Provenance ---
+code_repository: https://github.com/marjo-luc/my-sample-algorithm.git
+citation: https://github.com/marjo-luc/my-sample-algorithm.git
+author: Marjorie Lucas
+contributor: Marjorie Lucas
+license: None
+release_notes: None
+
+# --- Execution ---
+run_command: write_inputs.py          # must be on PATH in the image, or an absolute path
+ram_min: 256                          # mebibytes -- minimum RAM; too low means an OOM kill
+cores_min: 1
+outdir_max: 10                        # mebibytes -- output dir cap; too low fails at the very end
+
+# --- Inputs: each becomes `--<name> <value>` on the command line ---
+inputs:
+  - name: required_no_default
+    doc: Input is required and has no default specified
+    label: required_no_default
+    type: string
+  - name: required_default
+    doc: Input is required and default is specified
+    label: required_default
+    type: string
+    default: required_default default value
+  - name: optional_no_default
+    doc: Input is optional and has no default specified
+    label: optional_no_default
+    type: string?
+  - name: optional_default
+    doc: Input is optional and default is specified
+    label: optional_default
+    type: string?
+    default: optional_default default value
+  - name: output_file
+    doc: Name of the output text file (written inside output/)
+    label: Output filename
+    type: string?
+    default: output.txt
+
+# --- Output: exactly one, always a Directory globbed from ./output* ---
+# The name MUST start with "out": MAAP uses it to mount the results into the
+# user's bucket. Nothing validates this -- any other name loses the results.
+outputs:
+  - name: out
+    type: Directory
