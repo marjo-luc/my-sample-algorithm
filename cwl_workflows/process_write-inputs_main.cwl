@@ -97,7 +97,7 @@ s:contributor:
   s:name: Marjorie Lucas
 s:citation: https://github.com/marjo-luc/my-sample-algorithm.git
 s:codeRepository: https://github.com/marjo-luc/my-sample-algorithm.git
-s:commitHash: 96fb8e20ffefa82cd60ea187cb4aa851e2729d41
+s:commitHash: 9c9ac62306f4f663fae9565d9c3e4e0615121f43
 s:dateCreated: 2026-10-14
 s:license: None
 s:softwareVersion: 1.0.0
